@@ -36,8 +36,8 @@ class Kernel
         $this->container['config'] = [
             'database' => [
                 'host' => 'localhost',
-                'dbname' => 'room_raccoon;',
-                'username' => 'user_room',
+                'dbname' => 'room_raccoon',
+                'username' => 'user',
                 'password' => 'pass'
             ]
         ];
