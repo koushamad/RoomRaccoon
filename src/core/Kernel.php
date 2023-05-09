@@ -3,17 +3,19 @@
 namespace Kousha\RoomRaccoon\Core;
 
 use Bramus\Router\Router;
-use Kousha\RoomRaccoon\app\Route;
+use Kousha\RoomRaccoon\App\Route;
 use Pimple\Container;
 use Kousha\RoomRaccoon\App\Controllers\ShoppingListController;
 use Kousha\RoomRaccoon\App\Models\ShoppingListModel;
 use Exception;
 
-class Kernel {
+class Kernel
+{
     private Container $container;
     private Router $router;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->container = new Container();
         $this->registerServices();
         $this->router = new Router();
@@ -58,7 +60,6 @@ class Kernel {
         $route = new Route($this->router, $this->container);
         $route->registerRoutes();
     }
-
 
     private function handleException(Exception $e): void
     {

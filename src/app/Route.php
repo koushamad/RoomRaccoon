@@ -1,6 +1,6 @@
 <?php
 
-namespace Kousha\RoomRaccoon\app;
+namespace Kousha\RoomRaccoon\App;
 
 use Bramus\Router\Router;
 use Kousha\RoomRaccoon\App\Controllers\ShoppingListController;
