@@ -70,4 +70,9 @@ class Kernel
             'message' => $e->getMessage()
         ]);
     }
+
+    public function getContainer(string $name)
+    {
+        return $this->container->offsetGet($name);
+    }
 }
