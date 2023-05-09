@@ -5,21 +5,26 @@ namespace Kousha\RoomRaccoon\App\Controllers;
 
 use Kousha\RoomRaccoon\App\Models\ShoppingListModel;
 use Kousha\RoomRaccoon\Core\Controller;
-class ShoppingListController extends Controller {
+
+class ShoppingListController extends Controller
+{
     private ShoppingListModel $model;
 
-    public function __construct(ShoppingListModel $model) {
+    public function __construct(ShoppingListModel $model)
+    {
         $this->model = $model;
     }
 
-    public function index() {
+    public function index()
+    {
         $items = $this->model->getItems();
 
         header('Content-Type: application/json');
         echo json_encode($items);
     }
 
-    public function add() {
+    public function add()
+    {
         $json = file_get_contents('php://input');
         $data = json_decode($json);
 
@@ -40,7 +45,8 @@ class ShoppingListController extends Controller {
         }
     }
 
-    public function update($id) {
+    public function update($id)
+    {
         $json = file_get_contents('php://input');
         $data = json_decode($json);
 
@@ -61,7 +67,8 @@ class ShoppingListController extends Controller {
         }
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $result = $this->model->deleteItem($id);
 
         if ($result) {
@@ -73,7 +80,8 @@ class ShoppingListController extends Controller {
         }
     }
 
-    public function markAsChecked($id) {
+    public function markAsChecked($id)
+    {
         $json = file_get_contents('php://input');
         $data = json_decode($json);
 

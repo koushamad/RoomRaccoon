@@ -33,14 +33,9 @@ class Kernel
 
     private function registerServices(): void
     {
-        $this->container['config'] = [
-            'database' => [
-                'host' => 'localhost',
-                'dbname' => 'room_raccoon',
-                'username' => 'user',
-                'password' => 'pass'
-            ]
-        ];
+        $config = require __DIR__ . '/../config.php';
+        $this->container['config'] = $config;
+
 
         $this->container['database'] = function ($c) {
             return Database::getInstance($c['config']['database'])->getConnection();

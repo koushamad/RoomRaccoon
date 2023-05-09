@@ -1,0 +1,126 @@
+openapi: 3.0.3
+info:
+  title: Room Raccoon Shopping List API
+  description: This API provides CRUD operations for managing a shopping list.
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8081'
+paths:
+  /api/shoppinglist:
+    get:
+      summary: Get the shopping list
+      responses:
+        '200':
+          description: A list of shopping list items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShoppingListItem'
+    post:
+      summary: Add an item to the shopping list
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShoppingListItem'
+      responses:
+        '201':
+          description: Item added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+  /api/shoppinglist/{id}:
+    put:
+      summary: Update an item in the shopping list
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShoppingListItem'
+      responses:
+        '200':
+          description: Item updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    delete:
+      summary: Delete an item from the shopping list
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Item deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+  /api/shoppinglist/{id}/check:
+    patch:
+      summary: Mark an item as checked or unchecked
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                checked:
+                  type: boolean
+              required:
+                - checked
+      responses:
+        '200':
+          description: Item marked as checked or unchecked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+
+components:
+  schemas:
+    ShoppingListItem:
+      type: object
+      properties:
+        item_name:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        checked:
+          type: boolean
+      required:
+        - item_name
+        - quantity
+
+    ApiResponse:
+      type: object
+      properties:
+        success:
+          type: string
+      required:
+        - success
