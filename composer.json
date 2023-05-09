@@ -1,0 +1,29 @@
+{
+    "name": "kousha/room-raccoon",
+    "autoload": {
+        "psr-4": {
+            "Kousha\\RoomRaccoon\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Kousha\\RoomRaccoon\\Tests\\": "tests/"
+        }
+    },
+
+    "authors": [
+        {
+            "name": "kousha ghodsizad",
+            "email": "kousha.ghodsizad@gmail.com"
+        }
+    ],
+    "require": {
+        "ext-pdo": "*",
+        "bramus/router": "^1.6",
+        "pimple/pimple": "^3.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "guzzlehttp/guzzle": "^7.0"
+    }
+}
