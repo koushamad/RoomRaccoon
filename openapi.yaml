@@ -4,7 +4,16 @@ info:
   description: This API provides CRUD operations for managing a shopping list.
   version: 1.0.0
 servers:
-  - url: 'http://localhost:8081'
+  - url: 'http://46.101.186.155'
+  - url: 'https://46.101.186.155'
+  - url: 'http://46.101.186.155:8081'
+  - url: 'http://146.190.178.6'
+  - url: 'https://146.190.178.6'
+  - url: 'http://146.190.178.6:8081'
+  - url: 'http://127.0.0.1'
+  - url: 'https://127.0.0.1'
+  - url: 'http://127.0.0.1:8081'
+
 paths:
   /api/shoppinglist:
     get:
@@ -24,7 +33,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ShoppingListItem'
+              $ref: '#/components/schemas/ShoppingListItemCreate'
       responses:
         '201':
           description: Item added
@@ -47,7 +56,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ShoppingListItem'
+              $ref: '#/components/schemas/ShoppingListItemCreate'
       responses:
         '200':
           description: Item updated
@@ -87,12 +96,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                checked:
-                  type: boolean
-              required:
-                - checked
+              $ref: '#/components/schemas/ShoppingListItemCheck'
       responses:
         '200':
           description: Item marked as checked or unchecked
@@ -106,6 +110,9 @@ components:
     ShoppingListItem:
       type: object
       properties:
+        id:
+          type: integer
+          format: int64
         item_name:
           type: string
         quantity:
@@ -113,9 +120,24 @@ components:
           format: int32
         checked:
           type: boolean
+    ShoppingListItemCreate:
+      type: object
+      properties:
+        item_name:
+          type: string
+        quantity:
+          type: integer
+          format: int32
       required:
         - item_name
         - quantity
+    ShoppingListItemCheck:
+      type: object
+      properties:
+        checked:
+          type: boolean
+      required:
+        - checked
 
     ApiResponse:
       type: object

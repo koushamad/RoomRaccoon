@@ -1,0 +1,49 @@
+stages:
+  - name: Build and Push Images
+    steps:
+      - publishImageConfig:
+          dockerfilePath: ./docker/php-fpm/Dockerfile
+          buildContext: .
+          tag: koushamad/room-raccoon:php-fpm
+          pushRemote: true
+          registry: index.docker.io
+      - runScriptConfig:
+          image: docker:19.03.11
+          shellScript: docker pull nginx:alpine && docker tag nginx:alpine koushamad/room-raccoon:nginx && docker push koushamad/room-raccoon:nginx
+      - runScriptConfig:
+          image: docker:19.03.11
+          shellScript: docker pull mysql:8.0 && docker tag mysql:8.0 koushamad/room-raccoon:mysql && docker push koushamad/room-raccoon:mysql
+      - runScriptConfig:
+          image: docker:19.03.11
+          shellScript: docker pull swaggerapi/swagger-ui && docker tag swaggerapi/swagger-ui koushamad/room-raccoon:swagger-ui && docker push koushamad/room-raccoon:swagger-ui
+  - name: Deploy to Kubernetes
+    steps:
+      - applyAppConfig:
+          catalogTemplate: cattle-global-data:infra-k8s-templates:infra-k8s
+          version: "0.0.1"
+          answers:
+            git.url: https://github.com/koushamad/RoomRaccoon.git
+            git.branch: develop
+          targetNamespace: default
+      - applyYamlConfig:
+          path: ./configmap.yaml
+      - applyYamlSecret:
+          path: ./secret.yaml
+      - applyYamlConfig:
+          path: ./db.yaml
+      - applyYamlConfig:
+          path: ./webserver.yaml
+      - applyYamlConfig:
+          path: ./swagger-ui.yaml
+      - applyYamlConfig:
+          path: ./php-fpm.yaml
+  - name: Create Rancher Pipeline
+    steps:
+      - createPipelineConfig:
+          name: "RoomRaccoonPipeline"
+          description: "Room Raccoon Pipeline"
+          projectID: RoomRaccoon
+          pipelineConfig: .rancher-pipeline.yml
+          targetNamespace: room-raccoon
+timeout: 60
+notification: {}

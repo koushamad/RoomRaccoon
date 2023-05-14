@@ -4,6 +4,11 @@ $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__.'/../');
 $dotenv->load();
 
 return [
+    'app' => [
+        'name' => $_ENV['APP_NAME'] ?? getenv('APP_NAME'),
+        'env' => $_ENV['APP_ENV'] ?? getenv('APP_ENV'),
+        'debug' => $_ENV['APP_DEBUG'] ?? getenv('APP_DEBUG'),
+    ],
     'database' => [
         'connection' => $_ENV['DB_CONNECTION'] ?? 'mysql',
         'mysql' => [

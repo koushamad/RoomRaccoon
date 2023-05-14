@@ -19,7 +19,6 @@ class ShoppingListController extends Controller
     {
         $items = $this->model->getItems();
 
-        header('Content-Type: application/json');
         echo json_encode($items);
     }
 
