@@ -25,7 +25,7 @@ cd RoomRaccoon
 
 # Create a database named room_raccoon and shopping_list table
 mysql -u root -p < database/create_room_raccoon_database.sql
-mysql -u root -p < database/create_shopping_list_table.sql
+mysql -u root -p -e room_raccoon < database/migrations/create_shopping_list_table.sql
 
 # install dependencies
 composer install
